@@ -18,7 +18,10 @@ const SignIn = () => {
 
   // event handlers
   const handleChange = (e) => {
-    console.log(e.target.value);
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
   };
 
   return (
