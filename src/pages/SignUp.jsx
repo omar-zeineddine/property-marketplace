@@ -2,6 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../firebase.config";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,6 +31,28 @@ const SignUp = () => {
     }));
   };
 
+  // firebase auth
+  // https://firebase.google.com/docs/auth/web/start#web-version-9-modular
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      // register user with promise based function
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // get user info
+      const user = userCredential.user;
+      // update display name and redirect
+      updateProfile(auth.currentUser, { displayName: name });
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className="pageContainer">
@@ -32,7 +60,7 @@ const SignUp = () => {
           <p className="pageHeader">Welcome Back!</p>
         </header>
 
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             className="nameInput"
