@@ -12,7 +12,6 @@ import {
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { async, FirebaseError } from "@firebase/util";
 
 const Category = () => {
   const [listings, setListings] = useState(null);
@@ -21,19 +20,18 @@ const Category = () => {
   const params = useParams();
 
   useEffect(() => {
-    const fetListings = async () => {
+    const fetchListings = async () => {
       try {
-        // get reference
+        // Get reference
         const listingsRef = collection(db, "listings");
-
-        // create a query
+        // Create a query
         const q = query(
           listingsRef,
-          where("type", "==", params.CategoryName),
+          where("type", "==", params.categoryName),
           orderBy("timestamp", "desc"),
           limit(10)
         );
-        // execute query
+        // Execute query
         const querySnap = await getDocs(q);
         const listings = [];
         querySnap.forEach((doc) => {
@@ -53,7 +51,7 @@ const Category = () => {
     <div className="category">
       <header>
         <p className="pageHeader">
-          {params.CategoryName === "rent"
+          {params.categoryName === "rent"
             ? "Places for rent"
             : "Places for sale"}
         </p>
