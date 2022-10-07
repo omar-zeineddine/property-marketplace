@@ -7,9 +7,20 @@ import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRig
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Email was sent");
+    } catch (err) {
+      toast.error("reset email could not be sent");
+    }
+  };
 
   return (
     <div className="pageContainer">
