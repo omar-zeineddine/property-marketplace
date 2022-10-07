@@ -32,9 +32,10 @@ const Category = () => {
           limit(10)
         );
         // Execute query
-        const querySnap = await getDocs(q);
+        const querySnapshot = await getDocs(q);
         const listings = [];
-        querySnap.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
+          //   console.log(doc.data());
           return listings.push({
             id: doc.id,
             data: doc.data(),
@@ -43,9 +44,11 @@ const Category = () => {
         setListings(listings);
         setLoading(false);
       } catch (err) {
-        toast.error("could not fetch listings");
+        // console.log(err);
+        toast.error("could not fetch");
       }
     };
+    fetchListings();
   }, []);
   return (
     <div className="category">
@@ -56,6 +59,13 @@ const Category = () => {
             : "Places for sale"}
         </p>
       </header>
+      {loading ? (
+        <Spinner />
+      ) : listings && listings.length > 0 ? (
+        <></>
+      ) : (
+        <p>No listings for {params.categoryName}</p>
+      )}
     </div>
   );
 };
