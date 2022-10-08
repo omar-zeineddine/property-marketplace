@@ -49,7 +49,7 @@ const Category = () => {
       }
     };
     fetchListings();
-  }, []);
+  }, [params.categoryName]);
   return (
     <div className="category">
       <header>
@@ -66,7 +66,7 @@ const Category = () => {
           <main>
             <ul className="categoryListings">
               {listings.map((listing) => (
-                <h3>{listing.data.name}</h3>
+                <h3 key={listing.id}>{listing.data.name}</h3>
               ))}
             </ul>
           </main>
