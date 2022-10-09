@@ -111,30 +111,32 @@ const CreateListing = () => {
 
     if (geolocationEnabled) {
       const response = await fetch(
-        // `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
         `https://api.geocodify.com/v2/geocode?api_key=${process.env.REACT_APP_GEOCODE_API}&q=${address}`
       );
 
       const data = await response.json();
       console.log(data);
 
-      geolocation.lat = data.response.bbox[0] ?? 0;
-      geolocation.lng = data.response.bbox[1] ?? 0;
+      geolocation.lat = data.response.features[0].geometry.coordinates[0] ?? 0;
+      geolocation.lng = data.response.features[0].geometry.coordinates[1] ?? 0;
 
-      // location =
-      //   data.status === "ZERO_RESULTS"
-      //     ? undefined
-      //     : data.results[0]?.formatted_address;
+      location =
+        data.response.features === []
+          ? undefined
+          : data.response.features[0].properties.label;
 
-      // if (location === undefined || location.includes("undefined")) {
-      //   setLoading(false);
-      //   toast.error("Please enter a correct address");
-      //   return;
-      // }
+      if (location === undefined || location.includes("undefined")) {
+        setLoading(false);
+        toast.error("Please enter a correct address");
+        return;
+      }
+      console.log(formData);
     } else {
       geolocation.lat = latitude;
       geolocation.lng = longitude;
     }
+
+    setLoading(false);
   };
 
   return (
