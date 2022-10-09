@@ -62,8 +62,37 @@ const CreateListing = () => {
     return <Spinner />;
   }
 
-  const onMutate = () => {};
-  const onSubmit = () => {};
+  const onMutate = (e) => {
+    let boolean = null;
+
+    if (e.target.value === "true") {
+      boolean = true;
+    }
+    if (e.target.value === "false") {
+      boolean = false;
+    }
+
+    // files
+    if (e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: e.target.files,
+      }));
+    }
+
+    // text/Booleans/numbers
+    if (!e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.id]: boolean ?? e.target.value,
+      }));
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
   return (
     <div className="profile">
@@ -80,6 +109,7 @@ const CreateListing = () => {
               className={type === "sale" ? "formButtonActive" : "formButton"}
               id="type"
               value="sale"
+              onClick={onMutate}
             >
               Sell
             </button>
@@ -88,6 +118,7 @@ const CreateListing = () => {
               className={type === "rent" ? "formButtonActive" : "formButton"}
               id="type"
               value="rent"
+              onClick={onMutate}
             >
               Rent
             </button>
@@ -99,6 +130,7 @@ const CreateListing = () => {
             type="text"
             id="name"
             value={name}
+            onChange={onMutate}
             maxLength="32"
             minLength="10"
             required
@@ -112,6 +144,7 @@ const CreateListing = () => {
                 type="number"
                 id="bedrooms"
                 value={bedrooms}
+                onChange={onMutate}
                 min="1"
                 max="50"
                 required
@@ -124,6 +157,7 @@ const CreateListing = () => {
                 type="number"
                 id="bathrooms"
                 value={bathrooms}
+                onChange={onMutate}
                 min="1"
                 max="50"
                 required
@@ -138,6 +172,7 @@ const CreateListing = () => {
               type="button"
               id="parking"
               value={true}
+              onClick={onMutate}
               min="1"
               max="50"
             >
@@ -150,6 +185,7 @@ const CreateListing = () => {
               type="button"
               id="parking"
               value={false}
+              onClick={onMutate}
             >
               No
             </button>
@@ -162,6 +198,7 @@ const CreateListing = () => {
               type="button"
               id="furnished"
               value={true}
+              onClick={onMutate}
             >
               Yes
             </button>
@@ -174,6 +211,7 @@ const CreateListing = () => {
               type="button"
               id="furnished"
               value={false}
+              onClick={onMutate}
             >
               No
             </button>
@@ -185,6 +223,7 @@ const CreateListing = () => {
             type="text"
             id="address"
             value={address}
+            onChange={onMutate}
             required
           />
 
@@ -197,6 +236,7 @@ const CreateListing = () => {
                   type="number"
                   id="latitude"
                   value={latitude}
+                  onChange={onMutate}
                   required
                 />
               </div>
@@ -207,6 +247,7 @@ const CreateListing = () => {
                   type="number"
                   id="longitude"
                   value={longitude}
+                  onChange={onMutate}
                   required
                 />
               </div>
@@ -219,6 +260,7 @@ const CreateListing = () => {
               className={offer ? "formButtonActive" : "formButton"}
               type="button"
               id="offer"
+              onClick={onMutate}
               value={true}
             >
               Yes
@@ -230,6 +272,7 @@ const CreateListing = () => {
               type="button"
               id="offer"
               value={false}
+              onClick={onMutate}
             >
               No
             </button>
@@ -242,6 +285,7 @@ const CreateListing = () => {
               type="number"
               id="regularPrice"
               value={regularPrice}
+              onChange={onMutate}
               min="50"
               max="750000000"
               required
@@ -257,6 +301,7 @@ const CreateListing = () => {
                 type="number"
                 id="discountedPrice"
                 value={discountedPrice}
+                onChange={onMutate}
                 min="50"
                 max="750000000"
                 required={offer}
@@ -272,6 +317,7 @@ const CreateListing = () => {
             className="formInputFile"
             type="file"
             id="images"
+            onChange={onMutate}
             max="6"
             accept=".jpg,.png,.jpeg"
             multiple
