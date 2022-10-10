@@ -194,7 +194,14 @@ const CreateListing = () => {
       return;
     });
 
-    console.log(imageUrls);
+    // object submitted to db
+    const formDataCopy = {
+      ...formData,
+      imageUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    };
+
     setLoading(false);
   };
 
