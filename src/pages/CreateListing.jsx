@@ -126,8 +126,8 @@ const CreateListing = () => {
       const data = await response.json();
       console.log(data);
 
-      geolocation.lat = data.response.features[0].geometry.coordinates[0] ?? 0;
-      geolocation.lng = data.response.features[0].geometry.coordinates[1] ?? 0;
+      geolocation.lat = data.response.features[0].geometry.coordinates[1] ?? 0;
+      geolocation.lng = data.response.features[0].geometry.coordinates[0] ?? 0;
 
       location =
         data.response.features === []
@@ -214,6 +214,7 @@ const CreateListing = () => {
     const docRef = await addDoc(collection(db, "listings"), formDataCopy);
     setLoading(false);
     toast.success("listing created");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
 
   return (
