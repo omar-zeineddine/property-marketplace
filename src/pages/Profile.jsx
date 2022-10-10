@@ -86,6 +86,17 @@ const Profile = () => {
     }
   };
 
+  const handleDelete = async (listingId) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      await deleteDoc(doc(db, "listings", listingId));
+      const updatedListings = listings.filter(
+        (listing) => listing.id !== listingId
+      );
+      setListings(updatedListings);
+      toast.success("Successfully deleted listing");
+    }
+  };
+
   return (
     <>
       <div className="profile">
@@ -147,6 +158,7 @@ const Profile = () => {
                     key={listing.id}
                     listing={listing.data}
                     id={listing.id}
+                    onDelete={() => handleDelete(listing.id)}
                   />
                 ))}
               </ul>

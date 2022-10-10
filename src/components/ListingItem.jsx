@@ -3,7 +3,7 @@ import { ReactComponent as DeleteIcon } from "../assets/svg/deleteIcon.svg";
 import bedIcon from "../assets/svg/bedIcon.svg";
 import bathtubIcon from "../assets/svg/bathtubIcon.svg";
 
-const ListingItem = ({ listing, id, handleDelete }) => {
+const ListingItem = ({ listing, id, onDelete }) => {
   return (
     <div>
       <li className="categoryListing">
@@ -47,11 +47,12 @@ const ListingItem = ({ listing, id, handleDelete }) => {
             </div>
           </div>
         </Link>
-        {handleDelete && (
+
+        {onDelete && (
           <DeleteIcon
             className="removeIcon"
             fill="rgb(231, 76,60)"
-            onClick={() => handleDelete(listing.id, listing.name)}
+            onClick={() => onDelete(listing.id, listing.name)}
           />
         )}
       </li>
