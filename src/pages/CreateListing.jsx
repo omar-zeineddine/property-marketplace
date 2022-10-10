@@ -202,11 +202,15 @@ const CreateListing = () => {
       timestamp: serverTimestamp(),
     };
 
+    // set same location string to the one in address box
+    formDataCopy.location = address;
+
     // remove uploaded images and
     delete formDataCopy.images;
     delete formDataCopy.address;
 
-    location && (formDataCopy.location = location);
+    // note: geocodify / google geocode api can miss street address name
+    // location && (formDataCopy.location = location);
 
     // if no offer, remove discounted price
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
