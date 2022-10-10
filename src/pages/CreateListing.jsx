@@ -202,7 +202,18 @@ const CreateListing = () => {
       timestamp: serverTimestamp(),
     };
 
+    // remove uploaded images and
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+
+    location && (formDataCopy.location = location);
+
+    // if no offer, remove discounted price
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
     setLoading(false);
+    toast.success("listing created");
   };
 
   return (
