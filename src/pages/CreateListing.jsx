@@ -7,6 +7,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { v4 as uuidv4 } from "uuid";
 import Spinner from "../components/Spinner";
@@ -184,7 +185,7 @@ const CreateListing = () => {
     };
 
     // call function for all uploaded images
-    const imgUrls = await Promise.all(
+    const imageUrls = await Promise.all(
       // spread across all images in array
       [...images].map((image) => storeImage(image))
     ).catch(() => {
@@ -193,7 +194,7 @@ const CreateListing = () => {
       return;
     });
 
-    console.log(imgUrls);
+    console.log(imageUrls);
     setLoading(false);
   };
 
