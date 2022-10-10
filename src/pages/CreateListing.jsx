@@ -124,7 +124,6 @@ const CreateListing = () => {
       );
 
       const data = await response.json();
-      console.log(data);
 
       geolocation.lat = data.response.features[0].geometry.coordinates[1] ?? 0;
       geolocation.lng = data.response.features[0].geometry.coordinates[0] ?? 0;
