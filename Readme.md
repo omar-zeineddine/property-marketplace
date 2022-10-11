@@ -1,4 +1,4 @@
-A brief high-level overview of the tech stack used in the Devlog web app:
+A brief high-level overview of the tech stack used in the Property Marketplace web app:
 
 - Frontend:
 
